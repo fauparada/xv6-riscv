@@ -20,4 +20,7 @@ Para esta tarea debimos instalar el sistema operativo xv6, compilarlo y ejecutar
 
 ### Confirmación de funcionamiento correcto
 
-La instalación de xv6 fue exitosa. El sistema operativo se compiló y se ejecutó correctamente en el emulador QEMU y fue posible ejecutar los comandos de prueba solicitados, como se evidencia en las capturas de pantalla adjuntas en la entrega de WebCursos. 
+La instalación de xv6 fue exitosa. El sistema operativo se compiló y se ejecutó correctamente en el emulador QEMU y fue posible ejecutar los comandos de prueba solicitados, como se evidencia en las capturas de pantalla en la entrega de WebCursos y adjuntas a continuación:
+
+https://raw.githubusercontent.com/fauparada/xv6-riscv/fauparada/captura1_xv6.JPG
+
