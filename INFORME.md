@@ -22,5 +22,16 @@ Para esta tarea debimos instalar el sistema operativo xv6, compilarlo y ejecutar
 
 La instalación de xv6 fue exitosa. El sistema operativo se compiló y se ejecutó correctamente en el emulador QEMU y fue posible ejecutar los comandos de prueba solicitados, como se evidencia en las capturas de pantalla en la entrega de WebCursos y adjuntas a continuación:
 
+Verificando el comando '$ ls':
 https://raw.githubusercontent.com/fauparada/xv6-riscv/fauparada/captura1_xv6.JPG
+
+Verificando el comando '$ echo "Hola xv6"' (al final de la imagen):
+https://raw.githubusercontent.com/fauparada/xv6-riscv/fauparada/captura2_xv6.JPG
+
+Verificando el comando '$ cat README':
+https://raw.githubusercontent.com/fauparada/xv6-riscv/fauparada/captura3_xv6.JPG
+https://raw.githubusercontent.com/fauparada/xv6-riscv/fauparada/captura4_xv6.JPG
+
+Saliendo del emulador QEMU:
+https://raw.githubusercontent.com/fauparada/xv6-riscv/fauparada/captura5_xv6.JPG
 
