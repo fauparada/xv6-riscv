@@ -22,6 +22,22 @@ sys_getpid(void)
   return myproc()->pid;
 }
 
+//Entrega el ID del proceso padre
+uint64
+sys_getppid(void)
+{
+  struct proc *p = myproc(); //Para obtener el proceso actual
+
+  //'parent' apunta a la estructura proc del padre
+  if (p -> parent) {
+    //Entrega el PID del padre (p->parent->pid)
+    return p->parent->pid;
+  }
+
+  //si no hay padre, entrega 0
+  return 0;
+}
+
 uint64
 sys_fork(void)
 {
