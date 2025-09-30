@@ -72,11 +72,11 @@ Para integrar la función getancestor(n) se hicieron las siguientes modificacion
 
 Tuvimos tres dificultades principales durante esta parte:
 
-1. Error de "linking"
+1. Error de "linking".
 Al compilar yosoytupadre.c, nos apareció el error "undefined reference to 'getancestor'", que fue lo mismo que había ocurrido en la parte I. Para solucionarlo, tal como lo hicimos anteriormente, agregamos manuelmente el código de ensamblador para getancestor en el archivo usys.S en user.
 
-2. Error del compilador
+2. Error del compilador.
 Al compilar se generó el error "void value not ignored". Al investigar, entendimos que fue un error en sysproc.c en kernel al intentar verificar el valor de retorno de la función argint(0, &n), y que en esta versión xv6, la función argint no entrega un int para mostrar un éxito o falla, sino que entrega void. Para solucionarlo eliminamos la verficación del valor de retorno, dejando la llamada argint(0, &n), asumiendo que la lectura del argumento fue existosa para la implementación del syscall.
 
-3. Error en casos límite
+3. Error en casos límite.
 Al compilar y luego usar el programa yosoytupadre en el terminal, el programa fallaba al verificar los ancestros n = 3 y n = 4, entregando PIDs incorrectos en vez de los esperados. Después de analizarlo, nos dimos cuenta de que asumimos que la jerarquía de procesos empezaba con PID 1, lo que no estaba bien. Además la lógica en sys_getancestor no manejaba bien la trancisión al proceso con PID 0. Para solucionarlo, primero actualizamos el programa de prueba yosoytupadre.c para que considerara la jerarquía real y ajustamos los PIDs esperados para n = 3 y n = 4. Después, corregimos la lógica en sysproc.c en kernel para que el loop se detuviera correctamente y entregara -1 si el puntero del proceso subía más que PID 0.
