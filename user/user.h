@@ -22,6 +22,7 @@ int chdir(const char*);
 int dup(int);
 int getpid(void);
 int getppid(void);
+int getancestor(int n);
 char* sbrk(int);
 char* sys_sbrk(int,int);
 int pause(int);

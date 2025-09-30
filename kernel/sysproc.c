@@ -38,6 +38,42 @@ sys_getppid(void)
   return 0;
 }
 
+//Entrega el PID del ancestro n
+uint64
+sys_getancestor(void)
+{
+  int n;
+  struct proc *p = myproc(); //Para obtener el proceso actual
+  int i;
+
+  //1. tomar el argumento n del usuario
+  argint(0, &n);
+
+    //si n es negativo, es un argumento inválido:
+  if(n < 0) {
+    return -1; //error en la lectura de argumento
+  }
+
+    //si n=0, entrega el PID del proceso actual
+  if (n==0) {
+    return p->pid;
+  }
+
+  //2. iterar n veces para encontrar el ancestro
+    // el loop itera n veces pero si p->parent es null significa que ya no hay más ancestros
+  for (i=0; i < n; i++) {
+    if (p->parent == 0 || p->parent->pid == 0) {
+      return -1;
+    }
+
+    p = p->parent;
+
+  }
+
+  //después de n pasos, el proceso p es el ancestro n y se retorna su PID
+  return p->pid;
+}
+
 uint64
 sys_fork(void)
 {
