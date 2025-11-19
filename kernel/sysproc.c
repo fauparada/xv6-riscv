@@ -157,3 +157,31 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_mrdprotect(void)
+{
+  uint64 addr;
+  int len;
+  
+  // Obtener argumentos (estas funciones son void en algunas versiones de XV6)
+  argaddr(0, &addr);
+  argint(1, &len);
+  
+  // Llamar a la función del kernel
+  return mrdprotect((void*)addr, len);
+}
+
+uint64
+sys_munrdprotect(void)
+{
+  uint64 addr;
+  int len;
+  
+  // Obtener argumentos (estas funciones son void en algunas versiones de XV6)
+  argaddr(0, &addr);
+  argint(1, &len);
+  
+  // Llamar a la función del kernel
+  return munrdprotect((void*)addr, len);
+}

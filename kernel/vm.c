@@ -484,3 +484,99 @@ ismapped(pagetable_t pagetable, uint64 va)
   }
   return 0;
 }
+
+int
+mrdprotect(void *addr, int len)
+{
+  struct proc *p = myproc();
+  uint64 va = (uint64)addr;
+  
+  // Validar parámetros
+  if(len <= 0)
+    return -1;
+  
+  // Verificar alineación a página
+  if(va % PGSIZE != 0)
+    return -1;
+  
+  // Verificar que está en espacio de usuario
+  if(va >= MAXVA)
+    return -1;
+  
+  // Primero validar que todas las páginas existan
+  for(int i = 0; i < len; i++) {
+    uint64 curr_va = va + i * PGSIZE;
+    
+    if(curr_va >= MAXVA)
+      return -1;
+    
+    pte_t *pte = walk(p->pagetable, curr_va, 0);
+    
+    if(pte == 0 || (*pte & PTE_V) == 0)
+      return -1;
+    
+    if((*pte & PTE_U) == 0)
+      return -1;
+  }
+  
+  // Modificar los PTEs
+  for(int i = 0; i < len; i++) {
+    uint64 curr_va = va + i * PGSIZE;
+    pte_t *pte = walk(p->pagetable, curr_va, 0);
+    
+    // Limpiar PTE_R (quitar permiso de lectura)
+    *pte = *pte & ~PTE_R;
+  }
+  
+  // Actualizar TLB
+  sfence_vma();
+  
+  return 0;
+}
+
+int
+munrdprotect(void *addr, int len)
+{
+  struct proc *p = myproc();
+  uint64 va = (uint64)addr;
+  
+  // Validar parámetros
+  if(len <= 0)
+    return -1;
+  
+  if(va % PGSIZE != 0)
+    return -1;
+  
+  if(va >= MAXVA)
+    return -1;
+  
+  // Validar que todas las páginas existan
+  for(int i = 0; i < len; i++) {
+    uint64 curr_va = va + i * PGSIZE;
+    
+    if(curr_va >= MAXVA)
+      return -1;
+    
+    pte_t *pte = walk(p->pagetable, curr_va, 0);
+    
+    if(pte == 0 || (*pte & PTE_V) == 0)
+      return -1;
+    
+    if((*pte & PTE_U) == 0)
+      return -1;
+  }
+  
+  // Restaurar los PTEs
+  for(int i = 0; i < len; i++) {
+    uint64 curr_va = va + i * PGSIZE;
+    pte_t *pte = walk(p->pagetable, curr_va, 0);
+    
+    // Activar PTE_R (restaurar permiso de lectura)
+    *pte = *pte | PTE_R;
+  }
+  
+  // Actualizar TLB
+  sfence_vma();
+  
+  return 0;
+}
