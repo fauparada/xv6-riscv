@@ -1,5 +1,10 @@
 # Tarea 3: Protección de Lectura en XV6
 
+## Integrantes:
+
+- José Joaquín Clavería
+- Faustina Parada
+
 ## Descripción
 Este proyecto implementa un mecanismo de protección de memoria que permite marcar páginas como "solo escritura" (sin lectura) en el sistema operativo XV6. Esto es útil para proteger datos sensibles como claves criptográficas.
 
@@ -126,8 +131,6 @@ pte_t *walk(pagetable_t pagetable, uint64 va, int alloc)
 3. Probar con direcciones inválidas
 4. Verificar que otros procesos no se vean afectados
 
-## Autor
-[Tu Nombre]
 
 ## Referencias
 - XV6 Book: https://pdos.csail.mit.edu/6.828/2023/xv6/book-riscv-rev3.pdf
